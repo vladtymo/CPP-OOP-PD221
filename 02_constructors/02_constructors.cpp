@@ -26,11 +26,11 @@ public:
         this->model = model;
         this->color = color;
 
-        /*if (year < 1700)
-            this->year = 1700;
+        /*if (year < 1886 )
+            this->year = 1886 ;
         else 
             this->year = year;*/
-        this->year = (year < 1700) ? 1700 : year;
+        this->year = (year < 1886) ? 1886 : year;
 
         this->maxSpeed = (maxSpeed < 0) ? 0 : maxSpeed;
         this->speed = 0;
