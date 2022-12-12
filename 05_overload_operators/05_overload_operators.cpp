@@ -29,7 +29,12 @@ public:
         return Kettle(this->model, this->color, this->volume + other.volume);
     }
     
-    // Unary Operators: ++ -- -
+    // -=-=-=-=-=-=-=-=- Operator Overloading -=-=-=-=-=-=-=-=-
+    /*
+        return_type operator[symbol](parameters) { }
+    */
+
+    // Unary operators - works with only one operand (this): ++ -- -
     void operator++()
     {
         this->volume += 50;
@@ -40,7 +45,9 @@ public:
             this->volume -= 50;
     }
     
-    // Binary Operators: + - * / > < >= <= == != =
+    // Binary opertors - works with two operands: + - * / > < >= <= == != =
+    // this		 - left operand
+    // parameter - right operand
     Kettle& operator=(const Kettle& other) = delete;
 
     Kettle operator+(const Kettle& other) const
