@@ -7,6 +7,16 @@ private:
     int length;
     char* symbols;
 
+    void Copy(const String& other)
+    {
+        this->length = other.length;
+        this->symbols = new char[length];
+        for (size_t i = 0; i < length; i++)
+        {
+            symbols[i] = other.symbols[i];
+        }
+    }
+
 public:
     String() : length(0), symbols(nullptr) { }
     String(char symbol, int count = 1)
@@ -20,16 +30,18 @@ public:
     }
     explicit String(const String& other)
     {
-        this->length = other.length;
-        this->symbols = new char[length];
-        for (size_t i = 0; i < length; i++)
-        {
-            symbols[i] = other.symbols[i];
-        }
+        Copy(other);
     }
     ~String()
     {
         delete[] symbols;
+    }
+
+    void operator=(const String& other)
+    {
+        delete[] this->symbols;
+
+        Copy(other);
     }
 
     void Replace(char oldS, char newS)
@@ -84,6 +96,8 @@ int main()
 
     String str2(str1); // copy constructor
 
+    str1 = str2;       // assign operator [=]
+
     str2.Replace('#', '*');
     str2.Append('?');
     str2.PrintLine();
@@ -91,4 +105,6 @@ int main()
     //String str3('$');  // explicit invoke
     String str3 = '$'; // implicit invoke
     str3.PrintLine();
+
+
 }
