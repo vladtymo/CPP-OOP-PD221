@@ -10,6 +10,9 @@ private:
     string color;
     bool isPowerOn;
 
+    // static fields
+    static string type; // create once only
+
     friend void operator<<(ostream&, const Kettle&);
     friend void operator>>(istream&, Kettle&);
 public:
@@ -27,6 +30,18 @@ public:
         cout << "Color: " << color << endl;
         cout << "Volume: " << volume << "ml" << endl;
         cout << "Power: " << (isPowerOn ? "ON" : "OFF") << endl;
+        cout << "Type: " << this->type << endl;
+    }
+
+    // static methods - does not have this pointer
+    // has access to static fields only
+    static string GetType()
+    {
+        return type;
+    }
+    static void SetType(string value)
+    {
+        type = value;
     }
 
     Kettle Add(const Kettle& other) const
@@ -80,7 +95,7 @@ public:
 };
 
 // ------- overload operators using global funcitons
- // operator [<<]: ostream << Kettle
+// operator [<<]: ostream << Kettle
 void operator<<(ostream& os, const Kettle& kettle)
 {
     os << "----------- Kettle: " << kettle.model << " -----------\n";
@@ -98,6 +113,9 @@ void operator>>(istream& cin, Kettle& kettle)
     cin >> kettle.volume;
 }
 
+// initialize static fields
+string Kettle::type = "Some type";
+
 int main()
 {
     int a = 6, b = 10;
@@ -111,9 +129,12 @@ int main()
     string strA = "hello", strB = "bye";
     cout << strA + strB << endl;
 
+    // invoke static methods
+    Kettle::SetType("New type");
+    cout << "Type: " << Kettle::GetType() << endl;
+
     // -----------------------
     Kettle myKettle("Phillips", "White", 1800);
-    
     myKettle.ShowInfo();
 
     Kettle yourKettle("Tefal", "Black", 1250);
