@@ -10,11 +10,17 @@ private:
     string color;
     bool isPowerOn;
 
+    friend void operator<<(ostream&, const Kettle&);
+    friend void operator>>(istream&, Kettle&);
 public:
     Kettle() : model(""), color(""), volume(0), isPowerOn(false) { }
     Kettle(string m, string c, float v) : model(m), color(c), volume(v), isPowerOn(false) { }
     Kettle(const Kettle& other) = default;
 
+    void SwitchPower()
+    {
+        isPowerOn = !isPowerOn;
+    }
     void ShowInfo() const
     {
         cout << "----------- Kettle: " << model << " -----------\n";
@@ -35,14 +41,16 @@ public:
     */
 
     // Unary operators - works with only one operand (this): ++ -- -
-    void operator++()
+    Kettle& operator++()
     {
         this->volume += 50;
+        return *this;
     }
-    void operator--()
+    Kettle& operator--()
     {
         if (this->volume >= 50)
             this->volume -= 50;
+        return *this;
     }
     
     // Binary opertors - works with two operands: + - * / > < >= <= == != =
@@ -66,7 +74,29 @@ public:
         // this < other
         return !(*this < other);
     }
+
+    // input / output operators
+    // operation: ostream << Kettle
 };
+
+// ------- overload operators using global funcitons
+ // operator [<<]: ostream << Kettle
+void operator<<(ostream& os, const Kettle& kettle)
+{
+    os << "----------- Kettle: " << kettle.model << " -----------\n";
+    os << "Color: " << kettle.color << endl;
+    os << "Volume: " << kettle.volume << "ml" << endl;
+    os << "Power: " << (kettle.isPowerOn ? "ON" : "OFF") << endl;
+}
+void operator>>(istream& cin, Kettle& kettle)
+{
+    cout << "Enter model: ";
+    cin >> kettle.model;
+    cout << "Enter color: ";
+    cin >> kettle.color;
+    cout << "Enter volume: ";
+    cin >> kettle.volume;
+}
 
 int main()
 {
@@ -74,6 +104,9 @@ int main()
     cout << a + b << endl;
     cout << -a << endl;
     cout << ++a << endl;
+
+    int c = ++a;
+    int d = a = b;
 
     string strA = "hello", strB = "bye";
     cout << strA + strB << endl;
@@ -89,8 +122,10 @@ int main()
     //Kettle superKettle = myKettle.Add(yourKettle);
     Kettle superKettle = myKettle + yourKettle;
     superKettle.ShowInfo();
-
+    
     ++superKettle;
+    Kettle other = ++superKettle;
+
     superKettle.ShowInfo();
 
     if (myKettle > yourKettle)
@@ -101,4 +136,10 @@ int main()
     // operator [=]
     //myKettle = superKettle; // delete function (operator=)
     //myKettle.ShowInfo();
+
+    // operator [>>]
+    cin >> myKettle;
+
+    // operator [<<]
+    cout << myKettle;
 }
