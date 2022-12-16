@@ -70,6 +70,12 @@ public:
         cout << "Paying taxes...\n";
         salary -= 10;
     }
+    void ShowInfo() const
+    {
+        Person::ShowInfo(); // invoke base class method
+        cout << "Position: " << position << endl;
+        cout << "Salary: " << salary << "$" << endl;
+    }
 };
 
 class Programmer : public Employee
@@ -88,6 +94,11 @@ public:
     {
         cout << name << ": writing a code line on " << programmingLang << "...!\n";
         ++wroteLines;
+    }
+    void ShowInfo() const
+    {
+        Employee::ShowInfo();
+        cout << "Programming Langiage: " << programmingLang << endl;
     }
 };
 
