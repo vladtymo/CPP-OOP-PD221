@@ -1,0 +1,5 @@
+---------- Ukrtrain ----------
+Speed: 0km/h
+Free Places: 480 of 480
+Color: Blue
+Wagons: 12

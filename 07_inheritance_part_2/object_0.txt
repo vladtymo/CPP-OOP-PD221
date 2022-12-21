@@ -1,0 +1,4 @@
+---------- Bus ----------
+Speed: 0km/h
+Free Places: 23 of 23
+Color: Red

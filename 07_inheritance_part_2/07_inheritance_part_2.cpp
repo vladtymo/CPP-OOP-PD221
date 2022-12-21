@@ -1,15 +1,16 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 class PublicTransport
 {
 private:
+protected:
     string model;
     int totalPlaces;
     int freePlaces;
     string color;
-protected:
     float currentSpeed;
 
 public:
@@ -20,6 +21,7 @@ public:
     void ShowShortInfo() const
     {
         cout << "Transport: " << model << ": " << color << "\n";
+
     }
     void ShowInfo() const
     {
@@ -35,7 +37,7 @@ public:
         cout << "Transport was stoped!\n";
     }
 
-    void Drive()
+    virtual void Drive()
     {
         currentSpeed = 40;
         cout << "Transport is driving with speed of " << currentSpeed << "km/h\n";
@@ -66,6 +68,18 @@ public:
             cout << "No passengers!\n";
         }
     }
+
+    virtual void Save(string name) const
+    {
+        ofstream fout(name + ".txt");
+
+        fout << "---------- " << model << " ----------\n";
+        fout << "Speed: " << currentSpeed << "km/h\n";
+        fout << "Free Places: " << freePlaces << " of " << totalPlaces << "\n";
+        fout << "Color: " << color << "\n";
+
+        fout.close();
+    }
 };
 
 class Taxi : public PublicTransport
@@ -79,7 +93,7 @@ public:
         : PublicTransport(m, p, c), category(category), isFree(true)
     {}
 
-    void Drive()
+    void Drive() override
     {
         currentSpeed = 60;
         cout << "Taxi is driving with speed of " << currentSpeed << "km/h\n";
@@ -106,6 +120,20 @@ public:
         cout << "Category: " << category << endl;
         cout << "Status: " << (isFree ? "Free" : "Busy") << endl;
     }
+
+    void Save(string name) const override
+    {
+        ofstream fout(name + ".txt");
+
+        fout << "---------- " << model << " ----------\n";
+        fout << "Speed: " << currentSpeed << "km/h\n";
+        fout << "Free Places: " << freePlaces << " of " << totalPlaces << "\n";
+        fout << "Color: " << color << "\n";
+        fout << "Category: " << category << endl;
+        fout << "Status: " << (isFree ? "Free" : "Busy") << endl;
+
+        fout.close();
+    }
 };
 
 class Train : public PublicTransport
@@ -124,7 +152,7 @@ public:
         cout << "Wagons: " << wagons << endl;
     }
 
-    void Drive()
+    void Drive() override
     {
         currentSpeed = 90;
         cout << "Ttain is driving with speed of " << currentSpeed << "km/h\n";
@@ -140,6 +168,19 @@ public:
         else
             cout << "No wagons to unhitch!\n";
     }
+
+    void Save(string name) const override
+    {
+        ofstream fout(name + ".txt");
+
+        fout << "---------- " << model << " ----------\n";
+        fout << "Speed: " << currentSpeed << "km/h\n";
+        fout << "Free Places: " << freePlaces << " of " << totalPlaces << "\n";
+        fout << "Color: " << color << "\n";
+        fout << "Wagons: " << wagons << endl;
+
+        fout.close();
+    }
 };
 
 class Bicycle
@@ -147,7 +188,7 @@ class Bicycle
 
 };
 
-void TestDrive(PublicTransport transport)
+void TestDrive(PublicTransport& transport)
 {
     transport.ShowShortInfo();
     transport.Drive();
@@ -157,25 +198,25 @@ void TestDrive(PublicTransport transport)
 int main()
 {
     PublicTransport transport("Bus", 23, "Red");
-    transport.ShowInfo();
+    /*transport.ShowInfo();
     transport.Drive();
     transport.AddPassanger();
     transport.RemovePassanger();
-    transport.Stop();
+    transport.Stop();*/
 
     Taxi taxi("Toyota", 5, "Gray", "Econom");
-    taxi.ShowInfo();
-    taxi.ConfirmOrder(6);
-    taxi.Drive();
+    //taxi.ShowInfo();
+    //taxi.ConfirmOrder(6);
+    //taxi.Drive();
 
     Train train("Ukrtrain", 480, "Blue", 12);
-    train.ShowInfo();
-    train.UnhitchWagon();
-    train.Drive();
+    //train.ShowInfo();
+    //train.UnhitchWagon();
+    //train.Drive();
 
     PublicTransport tr2 = taxi;
-    tr2 = train;
-    tr2 = transport;
+
+    //tr2.Drive();
 
     cout << "\tTest Drive:\n";
     TestDrive(transport);
@@ -185,15 +226,18 @@ int main()
     Bicycle bicycle;
 
     // garage
-    PublicTransport garage[3]
+    PublicTransport* garage[3]
     {
-        transport,
-        taxi,
-        train
+        &transport,
+        &taxi,
+        &train
         //bicycle // dows not inherited PublicTransport class
     };
 
     cout << "\tGarage:\n";
     for (size_t i = 0; i < 3; i++)
-        garage[i].ShowShortInfo();
+    {
+        garage[i]->ShowShortInfo();
+        garage[i]->Save("object_" + to_string(i));
+    }
 }

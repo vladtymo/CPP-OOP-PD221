@@ -1,0 +1,6 @@
+---------- Toyota ----------
+Speed: 0km/h
+Free Places: 5 of 5
+Color: Gray
+Category: Econom
+Status: Free
