@@ -1,6 +1,6 @@
 #pragma once
 
-// LIFO - Last In, First Out
+// Stack is a linear data structure that follows the LIFO (Last-In-First-Out) principle.
 
 class Stack
 {
