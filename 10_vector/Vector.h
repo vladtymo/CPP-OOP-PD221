@@ -9,7 +9,7 @@ private:
 	T* collection;
 	int size;		// count of initialized elements
 
-	int growthKoef;
+	const int growthKoef;
 	int capacity;	// count of all allocated elements
 
 	void IncreaseCapacity()
@@ -49,6 +49,15 @@ public:
 		capacity = size;
 	}
 
+	void Clear()
+	{
+		if (collection != nullptr)
+		{
+			delete[] collection;
+			collection = nullptr;
+		}
+		size = capacity = 0;
+	}
 	void Push(const T& value)
 	{
 		this->Insert(value, size);

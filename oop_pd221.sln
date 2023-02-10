@@ -51,6 +51,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_graph", "09_graph\09_gra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_vector", "10_vector\10_vector.vcxproj", "{CE8674DB-5AC1-4FF0-829F-D60F927388CE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "15_composition", "15_composition\15_composition.vcxproj", "{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -243,6 +245,14 @@ Global
 		{CE8674DB-5AC1-4FF0-829F-D60F927388CE}.Release|x64.Build.0 = Release|x64
 		{CE8674DB-5AC1-4FF0-829F-D60F927388CE}.Release|x86.ActiveCfg = Release|Win32
 		{CE8674DB-5AC1-4FF0-829F-D60F927388CE}.Release|x86.Build.0 = Release|Win32
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Debug|x64.ActiveCfg = Debug|x64
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Debug|x64.Build.0 = Debug|x64
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Debug|x86.ActiveCfg = Debug|Win32
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Debug|x86.Build.0 = Debug|Win32
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Release|x64.ActiveCfg = Release|x64
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Release|x64.Build.0 = Release|x64
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Release|x86.ActiveCfg = Release|Win32
+		{9B5CFE71-224E-4D19-ABCC-05B2CEE8E358}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

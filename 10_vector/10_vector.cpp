@@ -24,4 +24,8 @@ int main()
     cout << "Size: " << vector.GetSize() << " of " << vector.GetCapacity() << endl;
 
     vector.Show("Original array");
+
+    vector.Clear();
+
+    vector.Show("Cleared array");
 }
