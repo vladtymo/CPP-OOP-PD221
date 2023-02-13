@@ -60,6 +60,55 @@ struct Processor
         : model(model), cores(c), frecuency(f), technology(t) { }
 };
 
+class SimCard
+{
+private:
+    string provider;
+    string number;
+
+    const string PUK_CODE = "1234";
+    string PIN_CODE = "1111";
+
+    Vector<string> contacts;
+
+public:
+    SimCard(string provider, string number)
+        : provider(provider), number(number) 
+    { }
+
+    void ShowInfo() const
+    {
+        cout << "Operator " << provider << ": " << number << endl;
+    }
+
+    void Activate(string PIN) const
+    {
+        if (PIN == PIN_CODE)
+            cout << "SIM card was activated successfully!\n";
+        else
+            cout << "Invalid PIN code. Please try again!\n";
+    }
+
+    void ChangePIN(string newPIN, string oldPIN)
+    {
+        if (PIN_CODE == oldPIN)
+            PIN_CODE = newPIN;
+    }
+
+    void AddContacts(initializer_list<string> list)
+    {
+        for (string item : list)
+        {
+            contacts.Push(item);
+        }
+    }
+
+    void ShowContacts() const
+    {
+        contacts.Show("Contact list");
+    }
+};
+
 class SmartPhone
 {
 private:
@@ -78,6 +127,9 @@ private:
     Processor processor;
     // apps
     Vector<string> applications;
+
+    // --------------- aggregation of the smart phone
+    SimCard* simCard;
 
 public:
     SmartPhone(string model, string color, int memory) 
@@ -110,6 +162,38 @@ public:
         cout << "Display: " << display.diagonal << "'" << endl;
         cout << "Camera: " << camera.GetMP() << "MP" << endl;
         cout << "Processor: " << processor.cores << " cores, " << processor.technology << "nm" << endl;
+        if (IsSIMExists())
+            simCard->ShowInfo();
+        else
+            cout << "No SIM Card!\n";
+
+        cout << string(30, '-') << endl;
+    }
+
+    void MakeCall(string contact) const
+    {
+        if (!IsSIMExists())
+        {
+            cout << "SIM card is required to make a call!\n";
+            return;
+        }
+
+        cout << "Calling " << contact << "...\n";
+    }
+
+    bool IsSIMExists() const
+    {
+        return simCard != nullptr;
+    }
+    void InjectSIM(SimCard* simCard)
+    {
+        this->simCard = simCard;
+    }
+    SimCard* EjectSIM()
+    {
+        SimCard* temp = this->simCard;
+        this->simCard = nullptr;
+        return temp;
     }
 };
 
@@ -119,4 +203,17 @@ int main()
 
     phone.Show();
     phone.ShowApps();
+
+    SimCard* card = new SimCard("Kyivstar", "+38098080808");
+
+    phone.InjectSIM(card);
+    phone.Show();
+
+    phone.MakeCall("911");
+
+    phone.EjectSIM();
+
+    phone.MakeCall("+380 (44) 255–70–42");
+
+    delete card;
 }
